@@ -5,11 +5,11 @@ var bodyParser = require('body-parser')
 var admin = require('firebase-admin')
 
 // This account is no longer valid
-var serviceAccount = require('./node-firebase-intro-firebase-adminsdk-r73z4-d28579f9a0.json')
+var serviceAccount = require('./agriculture-db-firebase-adminsdk-h8r3y-279d91e862.json')
 
 var firebaseAdmin = admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    databaseURL: 'https://node-firebase-intro.firebaseio.com'
+    databaseURL: "https://agriculture-db.firebaseio.com"
 })
 
 var database = firebaseAdmin.database()
