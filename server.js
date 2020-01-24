@@ -49,7 +49,7 @@ app.post('/generate_form',function(req, res){
 
     var result = {
         "village" : req.body.village,
-        "survey_no" : '213',
+        "survey_no" : req.body.survey_no,
         "sub_division_of" : req.body.sub_division_of,
         "taluka" : req.body.taluka,
         "cut_land" : req.body.cut_land,
@@ -59,7 +59,11 @@ app.post('/generate_form',function(req, res){
         "B_s_marks" : req.body.B_s_marks,
     } 
 
-    res.render('..\\7-12-doc.ejs',{result});
+    let setDoc = database.ref('seven_one_two/').set(req.body);
+
+    console.log(setDoc);
+
+    res.render('7-12-doc', {result});
 })
 
 app.get('/profile/:userId', (req, res) => {
