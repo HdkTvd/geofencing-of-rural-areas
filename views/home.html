@@ -252,47 +252,75 @@
       </section>
 
       <section id="2"></section>
-<form action="home" method="POST">
+<form action="http://127.0.0.1:8080/generate_form" method="POST">
 <section id="container1" class="add" style="height: 100%; width:100%;" >
     <h1 class="col-lg-12" style="text-align: center; color: #b09db9;">FILL THE 7/12 EXTRACT!!</h1>
 
 <span class="input col-sm-4">
-    <input type="text" class="input__field" id="input-1" name="rno" required />
+    <input type="text" class="input__field" id="input-1" name="village" required />
     <label for="input-1" class="input__label">
-    <span class="input__label-content">MEMBER-1</span>
+    <span class="input__label-content">Village</span>
 </label>
 </span>
 
 <span class="input col-sm-4">
-    <input type="text" class="input__field" id="input-2" name="rno1" required />
+    <input type="number" class="input__field" id="input-2" name="survey_no" required />
     <label for="input-2" class="input__label">
-    <span class="input__label-content">MEMBER-2</span>
+    <span class="input__label-content">Survey no</span>
     </label>
 </span>
 
 <span class="input col-sm-4">
-    <input type="text" class="input__field" id="input-3" name="rno2" required />
+    <input type="text" class="input__field" id="input-3" name="sub_division_of" required />
     <label for="input-3" class="input__label">
-    <span class="input__label-content">MEMBER-3</span>
+    <span class="input__label-content">Sub division of</span>
     </label>
 </span>
 
 <span class="input col-sm-4">
-    <input type="text" class="input__field" id="input-4" name="mentor_name" required/>
+    <input type="text" class="input__field" id="input-4" name="taluka" required/>
     <label for="input-4" class="input__label">
-    <span class="input__label-content">MENTOR NAME</span>
+    <span class="input__label-content">Taluka</span>
     </label>
 </span>
 
-<span class="input message col-sm-6">
-    <input type="text" class="input__field" id="input-5" name="title" required></input>
-    <label for="input-5" class="input__label">
-    <span class="input__label-content">TITLE</span>
+<span class="input col-sm-4">
+  <input type="number" class="input__field" id="input-5" name="cut_land" required />
+  <label for="input-5" class="input__label">
+  <span class="input__label-content">Cultivated Land (in acres)</span>
+  </label>
+</span>
+
+<span class="input col-sm-4">
+  <input type="text" class="input__field" id="input-6" name="name_of_occupant" required />
+  <label for="input-6" class="input__label">
+  <span class="input__label-content">Name of Occupant</span>
+  </label>
+</span>
+
+<span class="input col-sm-4">
+  <input type="number" class="input__field" id="input-7" name="khata_no" required />
+  <label for="input-7" class="input__label">
+  <span class="input__label-content">Khata no.</span>
+  </label>
+</span>
+
+<span class="input col-sm-4">
+  <input type="text" class="input__field" id="input-8" name="name_of_the_rent" required />
+  <label for="input-8" class="input__label">
+  <span class="input__label-content">Name of the Rent</span>
+  </label>
+</span>
+
+<span class="input col-sm-4">
+    <input type="number" class="input__field" id="input-9" name="B_s_marks" required></input>
+    <label for="input-9" class="input__label">
+    <span class="input__label-content">Boundary and Survey marks</span>
     </label>
 </span>
 
 <span class="col-lg-6" style="padding-left: 220px;">
-<button id="send-button" type="submit" value="ADD">ADD GROUP</button></span>
+<button id="send-button" type="submit">Generate Form</button></span>
 
 </section>
 </form>
