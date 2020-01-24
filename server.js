@@ -45,6 +45,23 @@ app.get('/', function(request, response){
     })
 })
 
+app.post('/generate_form',function(req, res){
+
+    var result = {
+        "village" : req.body.village,
+        "survey_no" : '213',
+        "sub_division_of" : req.body.sub_division_of,
+        "taluka" : req.body.taluka,
+        "cut_land" : req.body.cut_land,
+        "name_of_occupant" : req.body.name_of_occpuant,
+        "khata_no" : req.body.khata_no,
+        "name_of_the_rent" : req.body.name_of_the_rent,
+        "B_s_marks" : req.body.B_s_marks,
+    } 
+
+    res.render('..\\7-12-doc.ejs',{result});
+})
+
 app.get('/profile/:userId', (req, res) => {
     var userId = req.params.userId
     
