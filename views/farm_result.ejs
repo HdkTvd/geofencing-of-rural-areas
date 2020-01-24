@@ -8,6 +8,10 @@
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
     />
     <script src="https://api.mapbox.com/mapbox-gl-js/v1.6.1/mapbox-gl.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
     <link
       href="https://api.mapbox.com/mapbox-gl-js/v1.6.1/mapbox-gl.css"
       rel="stylesheet"
@@ -53,90 +57,41 @@
       type="text/css"
     />
     <!-- <div id="map"></div> -->
-    <div id="map_geo" class="map"></div>
+    <div id="map" style="width: 100vw ; height: 100vh"></div>
     <!-- <div class="calculation-box">
       <p>Draw a polygon using the draw tools.</p>
       <div id="calculated-area"></div>
     </div> -->
 
     <script>
-      mapboxgl.accessToken =
-        "pk.eyJ1IjoidHh0ciIsImEiOiJjazRmZTNldm4wbmZpM21uYW43Z292NmozIn0.9GHxkIq6wJ3I5LQBMMVedQ";
-      var map_pap = new mapboxgl.Map({
-        container: "map_geo", // container id
-        style: "mapbox://styles/mapbox/satellite-v9", //hosted style id
-        center: [-91.874, 42.76], // starting position
-        zoom: 12 // starting zoom
+      var platform = new H.service.Platform({
+          apikey: "SwDJ59x3TPwJ50nKgrdw1mK_yU0t4NbxEZXw0MaP4gw"
+        });
+        var maptypes = platform.createDefaultLayers();
+
+      
+      var map = new H.Map(document.getElementById('map'), maptypes.vector.normal.map, {
+        center: {lat: 19.15, lng: 72.99},
+        zoom: 10
       });
+        // Enable the event system on the map instance:
+      var mapEvents = new H.mapevents.MapEvents(map);
 
-      //   var draw = new MapboxDraw({
-      //     displayControlsDefault: false,
-      //     controls: {
-      //       polygon: true,
-      //       trash: true
-      //     }
-      //   });
-      //   map.addControl(draw);
+      // Instantiate the default behavior, providing the mapEvents object:
+      new H.mapevents.Behavior(mapEvents);
+        
+      // Create the default UI components
+      //   var ui = H.ui.UI.createDefault(map, defaultLayers);
+      console.log()
+      const lineString = new H.geo.LineString();
+      lineString.pushPoint({lat : 19.15 ,lng: 72.99});
+      lineString.pushPoint({lat : 19.3 ,lng: 73});
+      lineString.pushPoint({lat : 19.3 ,lng: 73.2});
+      lineString.pushPoint({lat : 19.15 ,lng: 72.99});  
+      const polygon = new H.map.Polygon(lineString);
+      map.addObject(polygon);
 
-      //   map.on("draw.create", updateArea);
-      //   map.on("draw.delete", updateArea);
-      //   map.on("draw.update", updateArea);
 
-      //   function updateArea(e) {
-      //     var data = draw.getAll();
-      //     var coor = data.features[0].geometry.coordinates[0];
-      //     // console.log(coor);
-      //     var answer = document.getElementById("calculated-area");
-      //     if (data.features.length > 0) {
-      //       var area = turf.area(data);
-      //       // restrict to area to 2 decimal points
-      //       var rounded_area = Math.round(area * 100) / 100;
-      //       answer.innerHTML =
-      //         "<p><strong>" + rounded_area + "</strong></p><p>square meters</p>";
-      //     } else {
-      //       answer.innerHTML = "";
-      //       if (e.type !== "draw.delete")
-      //         alert("Use the draw tools to draw a polygon!");
-      //     }
-      //     fetch("/saveCoordinate", {
-      //       method: "POST",
-      //       headers: {
-      //         "Content-Type": "application/json"
-      //       },
-      //       body: JSON.stringify({ coordinate: coor, area: rounded_area })
-      //     });
-
-      //     console.log("hey");
-      //   }
-      console.log("hello");
-      var geojson = [
-        {
-          type: "Feature",
-          geometry: {
-            type: "Point",
-            coordinates: [-77.031952, 38.913184]
-          }
-        },
-        {
-          type: "Feature",
-          geometry: {
-            type: "Point",
-            coordinates: [-122.413682, 37.775408]
-          }
-        }
-      ];
-      console.log("hello");
-      var mapGeo = map_pap
-        .map("map_geo")
-        .setView([37.8, -96], 4)
-        .addLayer(map_pap.styleLayer("mapbox://styles/mapbox/light-v10"));
-      console.log("hello");
-      var myLayer = map_pap
-        .featureLayer()
-        .setGeoJSON(geojson)
-        .addTo(mapGeo);
-      mapGeo.scrollWheelZoom.disable();
-      console.log("hello");
     </script>
   </body>
 </html>

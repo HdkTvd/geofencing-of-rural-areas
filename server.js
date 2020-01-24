@@ -174,6 +174,7 @@ app.post("/saveCoordinate", function(req, res) {
   console.log(req.body);
 });
 
+
 app.post("/farm_result", function(req, res) {
   let user_id = req.body.submit;
   console.log(user_id);
