@@ -32,17 +32,18 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(logger('dev'))
 
 app.get('/', function(request, response){
-    var restaurantsRef = database.ref("/restaurants")
+
+    // var restaurantsRef = database.ref("/restaurants")
     
-    restaurantsRef.once('value', function(snapshot){
-        var data = snapshot.val()
+    // restaurantsRef.once('value', function(snapshot){
+    //     var data = snapshot.val()
         
-        if ( !data ) {
-            data = {}
-        }
+    //     if ( !data ) {
+    //         data = {}
+    //     }
         
-        response.render('home.ejs', { restaurants: data })        
-    })
+        response.render('home.ejs')        
+    // })
 })
 
 app.post('/generate_form',function(req, res){
