@@ -53,7 +53,7 @@
       type="text/css"
     />
     <div id="map">
-      <a href="home.html" id="coord">Submit</a>
+      <button type="submit">Submit</button>
     </div>
     <div class="calculation-box">
       <p>Draw a polygon using the draw tools.</p>
@@ -77,7 +77,6 @@
           trash: true
         }
       });
-
       map.addControl(draw);
 
       map.on("draw.create", updateArea);
@@ -86,8 +85,9 @@
 
       function updateArea(e) {
         var data = draw.getAll();
+        var coor = data.features[0].geometry.coordinates[0];
+        // console.log(coor);
         var answer = document.getElementById("calculated-area");
-        let temp = data.features[0].geometry.coordinates[0];
         if (data.features.length > 0) {
           var area = turf.area(data);
           // restrict to area to 2 decimal points
@@ -99,24 +99,16 @@
           if (e.type !== "draw.delete")
             alert("Use the draw tools to draw a polygon!");
         }
-      }
-
-      var admin = require("firebase-admin");
-
-      // This account is no longer valid
-      var serviceAccount = require("./agriculture-db-firebase-adminsdk-h8r3y-279d91e862.json");
-
-      coord.onclick = function(temp) {
-        var firebaseAdmin = admin.initializeApp({
-          credential: admin.credential.cert(serviceAccount),
-          databaseURL: "https://agriculture-db.firebaseio.com"
+        fetch("/saveCoordinate", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ coordinate: coor })
         });
 
-        var database = firebaseAdmin.database();
-        database.ref("/seven_one_two").update({ coordinates: temp });
-
-        return { note: "Done" };
-      };
+        console.log("hey");
+      }
     </script>
   </body>
 </html>
