@@ -52,8 +52,9 @@
       href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.css"
       type="text/css"
     />
-    <div id="map"></div>
-
+    <div id="map">
+      <a href="home.html" id="coord">Submit</a>
+    </div>
     <div class="calculation-box">
       <p>Draw a polygon using the draw tools.</p>
       <div id="calculated-area"></div>
@@ -62,12 +63,11 @@
     <script>
       mapboxgl.accessToken =
         "pk.eyJ1IjoidHh0ciIsImEiOiJjazRmZTNldm4wbmZpM21uYW43Z292NmozIn0.9GHxkIq6wJ3I5LQBMMVedQ";
-
       var map = new mapboxgl.Map({
         container: "map", // container id
         style: "mapbox://styles/mapbox/satellite-v9", //hosted style id
-        center: [72.9958, 19.1598], // starting position
-        zoom: 18 // starting zoom
+        center: [-91.874, 42.76], // starting position
+        zoom: 12 // starting zoom
       });
 
       var draw = new MapboxDraw({
@@ -77,6 +77,7 @@
           trash: true
         }
       });
+
       map.addControl(draw);
 
       map.on("draw.create", updateArea);
@@ -86,11 +87,11 @@
       function updateArea(e) {
         var data = draw.getAll();
         var answer = document.getElementById("calculated-area");
+        let temp = data.features[0].geometry.coordinates[0];
         if (data.features.length > 0) {
           var area = turf.area(data);
           // restrict to area to 2 decimal points
           var rounded_area = Math.round(area * 100) / 100;
-          console.log(data.features[0].geometry.coordinates[0]);
           answer.innerHTML =
             "<p><strong>" + rounded_area + "</strong></p><p>square meters</p>";
         } else {
@@ -99,6 +100,23 @@
             alert("Use the draw tools to draw a polygon!");
         }
       }
+
+      var admin = require("firebase-admin");
+
+      // This account is no longer valid
+      var serviceAccount = require("./agriculture-db-firebase-adminsdk-h8r3y-279d91e862.json");
+
+      coord.onclick = function(temp) {
+        var firebaseAdmin = admin.initializeApp({
+          credential: admin.credential.cert(serviceAccount),
+          databaseURL: "https://agriculture-db.firebaseio.com"
+        });
+
+        var database = firebaseAdmin.database();
+        database.ref("/seven_one_two").update({ coordinates: temp });
+
+        return { note: "Done" };
+      };
     </script>
   </body>
 </html>
