@@ -80,7 +80,7 @@ app.get('/', function(request, response){
 })
 
 app.post('/generate_form',function(req, res){
-
+    user_id = 1;
     var result = {
         "village" : req.body.village,
         "survey_no" : req.body.survey_no,
@@ -93,9 +93,7 @@ app.post('/generate_form',function(req, res){
         "B_s_marks" : req.body.B_s_marks,
     } 
 
-    let setDoc = database.ref('seven_one_two/').set(req.body);
-
-    console.log(setDoc);
+    let setDoc = database.ref('seven_one_two/'+ user_id).set(req.body);
 
     res.render('7-12-doc', {result});
 })
