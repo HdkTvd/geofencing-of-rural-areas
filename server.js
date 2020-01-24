@@ -1,7 +1,7 @@
 var express = require('express')
 var logger = require('morgan')
 var bodyParser = require('body-parser')
-
+var XLSX = require('xlsx')
 var admin = require('firebase-admin')
 
 // This account is no longer valid
@@ -31,6 +31,38 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(logger('dev'))
 
+app.get('/getExcelData' , (req,res)=>{
+
+    var workbook = XLSX.readFile(__dirname+'/views/excel/crop_data.xlsx');
+    var sheet_name_list = workbook.SheetNames;
+    var xlData = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
+    // console.log(xlData[0]);
+    var rainfall_list = [];
+    var crop_list = [];
+    var humid_list =[];
+    var irri_list =[];
+    var min_temp_list =[];
+    var max_temp_list =[];
+    xlData.forEach(row => {
+        rainfall_list.push(row.Rainfall)
+        crop_list.push(row.Crops)
+        humid_list.push(row.Humidity)
+        irri_list.push(row.Irrigation)
+        min_temp_list.push(row.Min)
+        max_temp_list.push(row.Max)
+    });
+    my_json = {
+        "rainfall" : rainfall_list,
+        "crops" : crop_list,
+        "humidity" : humid_list,
+        "irri" : irri_list,
+        "min" : min_temp_list,
+        "max" : max_temp_list
+    }
+    res.json(my_json)
+});
+
+
 app.get('/', function(request, response){
 
     // var restaurantsRef = database.ref("/restaurants")
@@ -41,8 +73,9 @@ app.get('/', function(request, response){
     //     if ( !data ) {
     //         data = {}
     //     }
-        
-        response.render('home.ejs')        
+
+    
+    response.render('home.ejs')        
     // })
 })
 
