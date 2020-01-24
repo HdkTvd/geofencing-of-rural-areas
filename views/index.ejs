@@ -52,9 +52,7 @@
       href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.css"
       type="text/css"
     />
-    <div id="map">
-      <button type="submit">Submit</button>
-    </div>
+    <div id="map"></div>
     <div class="calculation-box">
       <p>Draw a polygon using the draw tools.</p>
       <div id="calculated-area"></div>
@@ -104,7 +102,7 @@
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({ coordinate: coor })
+          body: JSON.stringify({ coordinate: coor, area: rounded_area })
         });
 
         console.log("hey");

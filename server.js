@@ -1,16 +1,8 @@
-<<<<<<< HEAD
 var express = require("express");
 var logger = require("morgan");
 var bodyParser = require("body-parser");
 var XLSX = require("xlsx");
 var admin = require("firebase-admin");
-=======
-var express = require('express')
-var logger = require('morgan')
-var bodyParser = require('body-parser')
-var XLSX = require('xlsx')
-var admin = require('firebase-admin')
->>>>>>> 4cd83e2c969468a45afdf34da827f5cc4d811cc3
 
 // This account is no longer valid
 var serviceAccount = require("./agriculture-db-firebase-adminsdk-h8r3y-279d91e862.json");
@@ -104,63 +96,29 @@ app.post("/generate_form", function(req, res) {
 
 app.get("/profile/:userId", (req, res) => {
   var userId = req.params.userId;
+});
 
-<<<<<<< HEAD
+app.get("/", function(request, response) {
+  // var restaurantsRef = database.ref("/restaurants")
+
+  // restaurantsRef.once('value', function(snapshot){
+  //     var data = snapshot.val()
+
+  //     if ( !data ) {
+  //         data = {}
+  //     }
+
+  response.render("home.ejs");
+  // })
+});
+
+app.get("/profile/:userId", (req, res) => {
+  var userId = req.params.userId;
+
   var user = firebaseAdmin.getAllUsersData(userId);
 
   res.render("profile.ejs", { user: user });
 });
-
-var port = process.env.PORT || 8080;
-
-app.listen(port, function() {
-  console.log("App running on port " + port);
-});
-=======
-app.get('/', function(request, response){
-
-    // var restaurantsRef = database.ref("/restaurants")
-    
-    // restaurantsRef.once('value', function(snapshot){
-    //     var data = snapshot.val()
-        
-    //     if ( !data ) {
-    //         data = {}
-    //     }
-
-    
-    response.render('home.ejs')        
-    // })
-})
-
-app.post('/generate_form',function(req, res){
-    user_id = 1;
-    var result = {
-        "village" : req.body.village,
-        "survey_no" : req.body.survey_no,
-        "sub_division_of" : req.body.sub_division_of,
-        "taluka" : req.body.taluka,
-        "cut_land" : req.body.cut_land,
-        "name_of_occupant" : req.body.name_of_occpuant,
-        "khata_no" : req.body.khata_no,
-        "name_of_the_rent" : req.body.name_of_the_rent,
-        "B_s_marks" : req.body.B_s_marks,
-    } 
-
-    let setDoc = database.ref('seven_one_two/'+ user_id).set(req.body);
-
-    res.render('7-12-doc', {result});
-})
-
-app.get('/profile/:userId', (req, res) => {
-    var userId = req.params.userId
-    
-    var user = firebaseAdmin.getAllUsersData(userId)
-    
-    res.render('profile.ejs', { user: user })
-})
-
->>>>>>> 4cd83e2c969468a45afdf34da827f5cc4d811cc3
 
 app.use(logger("dev"));
 
@@ -197,7 +155,6 @@ app.post("/generate_form", function(req, res) {
   res.render("7-12-doc", { result });
 });
 
-
 app.get("/getmap", function(req, res) {
   res.render("index");
 });
@@ -210,8 +167,20 @@ app.post("/getmap", function(req, res) {
 });
 
 app.post("/saveCoordinate", function(req, res) {
-  // var setDoc = database.ref("seven_one_two/").set({ coordinates: req.body });
+  var user_id = 1;
+  var setDoc = database
+    .ref("seven_one_two/" + user_id)
+    .set({ coordinates: req.body.coordinate, area: req.body.area });
   console.log(req.body);
+});
+
+app.post("/farm_result", function(req, res) {
+  let user_id = req.body.submit;
+  console.log(user_id);
+  database.ref("seven_one_two/" + user_id).once("value", function(result) {
+    var farm_details = result.val();
+    res.render("farm_result", farm_details);
+  });
 });
 
 var port = process.env.PORT || 8080;
@@ -219,4 +188,3 @@ var port = process.env.PORT || 8080;
 app.listen(port, function() {
   console.log("App running on port " + port);
 });
-
