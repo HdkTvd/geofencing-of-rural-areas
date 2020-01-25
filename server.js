@@ -138,25 +138,6 @@ app.get("/", function(request, response) {
   // })
 });
 
-app.post("/generate_form", function(req, res) {
-  user_id = 1;
-  var result = {
-    village: req.body.village,
-    survey_no: req.body.survey_no,
-    sub_division_of: req.body.sub_division_of,
-    taluka: req.body.taluka,
-    cut_land: req.body.cut_land,
-    name_of_occupant: req.body.name_of_occpuant,
-    khata_no: req.body.khata_no,
-    name_of_the_rent: req.body.name_of_the_rent,
-    B_s_marks: req.body.B_s_marks
-  };
-
-  let setDoc = database.ref("pending/" + user_id).set(req.body);
-
-  res.render("7-12-doc", { result });
-});
-
 app.get("/getmap", function(req, res) {
   res.render("index");
 });
@@ -168,13 +149,13 @@ app.post("/getmap", function(req, res) {
   res.json({ status: "Done" });
 });
 
-app.post("/saveCoordinate", function(req, res) {
-  var whatsapp = "+919594246827";
-  var setDoc = database
-    .ref("pending/" + whatsapp)
-    .set({ coordinates: req.body.coordinate, area: req.body.area });
-  console.log(req.body);
-});
+// app.post("/saveCoordinate", function(req, res) {
+//   var whatsapp = "+919594246827";
+//   var setDoc = database
+//     .ref("pending/" + whatsapp)
+//     .set({ coordinates: req.body.coordinate, area: req.body.area });
+//   console.log(req.body);
+// });
 
 app.post("/farm_result", function(req, res) {
   let whatsapp = req.body.submit;
@@ -182,7 +163,7 @@ app.post("/farm_result", function(req, res) {
   database.ref("pending/" + whatsapp).once("value", function(result) {
     var farm_details = result.val();
     console.log(farm_details);
-    res.render("farm_result", mydata = farm_details);
+    res.render('index2',  {"farm_details" : [farm_details.coordinates]});
   });
 });
 
