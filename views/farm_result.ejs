@@ -8,10 +8,22 @@
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
     />
     <script src="https://api.mapbox.com/mapbox-gl-js/v1.6.1/mapbox-gl.js"></script>
-    <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
-    <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
-    <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
-    <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
+    <script
+      type="text/javascript"
+      src="https://js.api.here.com/v3/3.1/mapsjs-core.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://js.api.here.com/v3/3.1/mapsjs-service.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"
+    ></script>
     <link
       href="https://api.mapbox.com/mapbox-gl-js/v1.6.1/mapbox-gl.css"
       rel="stylesheet"
@@ -65,33 +77,50 @@
 
     <script>
       var platform = new H.service.Platform({
-          apikey: "SwDJ59x3TPwJ50nKgrdw1mK_yU0t4NbxEZXw0MaP4gw"
-        });
-        var maptypes = platform.createDefaultLayers();
-
-      
-      var map = new H.Map(document.getElementById('map'), maptypes.vector.normal.map, {
-        center: {lat: 19.15, lng: 72.99},
-        zoom: 10
+        apikey: "SwDJ59x3TPwJ50nKgrdw1mK_yU0t4NbxEZXw0MaP4gw"
       });
-        // Enable the event system on the map instance:
+      var maptypes = platform.createDefaultLayers();
+
+      var map = new H.Map(
+        document.getElementById("map"),
+        maptypes.vector.normal.map,
+        {
+          center: { lat: 19.15, lng: 72.99 },
+          zoom: 10
+        }
+      );
+      // Enable the event system on the map instance:
       var mapEvents = new H.mapevents.MapEvents(map);
 
       // Instantiate the default behavior, providing the mapEvents object:
       new H.mapevents.Behavior(mapEvents);
-        
       // Create the default UI components
       //   var ui = H.ui.UI.createDefault(map, defaultLayers);
-      console.log()
+      var mydata = "<%= mydata %>";
+      console.log(mydata);
       const lineString = new H.geo.LineString();
-      lineString.pushPoint({lat : 19.15 ,lng: 72.99});
-      lineString.pushPoint({lat : 19.3 ,lng: 73});
-      lineString.pushPoint({lat : 19.3 ,lng: 73.2});
-      lineString.pushPoint({lat : 19.15 ,lng: 72.99});  
+      lineString.pushPoint({
+        lat: mydata.coordinate[0],
+        lng: mydata.coordinate[0]
+      });
+      lineString.pushPoint({
+        lat: mydata.coordinate[1],
+        lng: mydata.coordinate[1]
+      });
+      lineString.pushPoint({
+        lat: mydata.coordinate[2],
+        lng: mydata.coordinate[2]
+      });
+      lineString.pushPoint({
+        lat: mydata.coordinate[3],
+        lng: mydata.coordinate[3]
+      });
+      lineString.pushPoint({
+        lat: mydata.coordinate[0],
+        lng: mydata.coordinate[0]
+      });
       const polygon = new H.map.Polygon(lineString);
       map.addObject(polygon);
-
-
     </script>
   </body>
 </html>

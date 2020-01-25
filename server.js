@@ -152,7 +152,7 @@ app.post("/generate_form", function(req, res) {
     B_s_marks: req.body.B_s_marks
   };
 
-  let setDoc = database.ref("seven_one_two/" + user_id).set(req.body);
+  let setDoc = database.ref("pending/" + user_id).set(req.body);
 
   res.render("7-12-doc", { result });
 });
@@ -169,20 +169,20 @@ app.post("/getmap", function(req, res) {
 });
 
 app.post("/saveCoordinate", function(req, res) {
-  var user_id = 1;
+  var whatsapp = "+919594246827";
   var setDoc = database
-    .ref("seven_one_two/" + user_id)
+    .ref("pending/" + whatsapp)
     .set({ coordinates: req.body.coordinate, area: req.body.area });
   console.log(req.body);
 });
 
-
 app.post("/farm_result", function(req, res) {
-  let user_id = req.body.submit;
-  console.log(user_id);
-  database.ref("seven_one_two/" + user_id).once("value", function(result) {
+  let whatsapp = req.body.submit;
+  console.log(whatsapp);
+  database.ref("pending/" + whatsapp).once("value", function(result) {
     var farm_details = result.val();
-    res.render("farm_result", farm_details);
+    console.log(farm_details);
+    res.render("farm_result", mydata = farm_details);
   });
 });
 
