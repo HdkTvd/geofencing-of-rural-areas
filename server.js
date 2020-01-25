@@ -2,6 +2,8 @@ var express = require("express");
 var logger = require("morgan");
 var bodyParser = require("body-parser");
 var XLSX = require("xlsx");
+const fetch = require('node-fetch');
+const utf8 = require('utf8');
 var admin = require("firebase-admin");
 
 // This account is no longer valid
@@ -183,6 +185,17 @@ app.post("/farm_result", function(req, res) {
     res.render("farm_result", mydata = farm_details);
   });
 });
+
+app.get("/getLocation", (req,res) => {
+  var str = "Bhayandar"
+  var fetching_str = encodeURI(str)
+  console.log(fetching_str)
+  var url = "https://api.mapbox.com/geocoding/v5/mapbox.places/"+fetching_str+".json?access_token=pk.eyJ1IjoidHh0ciIsImEiOiJjazRmZTNldm4wbmZpM21uYW43Z292NmozIn0.9GHxkIq6wJ3I5LQBMMVedQ"
+  fetch(url).then( res => {
+    console.log(res)
+  })
+  res.json({"Stauts": "Done"})
+})
 
 var port = process.env.PORT || 8080;
 
